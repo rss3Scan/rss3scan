@@ -126,11 +126,15 @@ export default {
   font-weight: 600;
   padding: 5px;
   display: block;
+  color: rgba(var(--vs-dark), 1);
 }
 
 .footer ul li a:hover {
   color: rgba(var(--vs-primary), 1) !important;
   opacity: 0.7;
+}
+.footer ul li a:visited {
+  color: rgba(var(--vs-dark), 1);
 }
 
 @media (max-width: 800px) {
