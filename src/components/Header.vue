@@ -20,39 +20,40 @@
       </vs-navbar-item>
       <template #right>
         <!-- <vs-button flat></vs-button> | -->
-        <vs-button gradient @click="$refs.login.$emit('show')"
-          >Sign In</vs-button
-        >
+        <vs-button gradient @click="$refs.login.$emit('show')" style="color: black;">Sign In</vs-button>
       </template>
     </vs-navbar>
     <LoginForm ref="login" />
   </div>
 </template>
 <script>
-import LoginForm from "@/components/LoginForm";
+  import LoginForm from "@/components/LoginForm";
 
-export default {
-  name: "Header",
-  components: {
-    LoginForm,
-  },
-  data: () => ({
-    index: "Home",
-  }),
-  watch: {
-    index: "routerChange",
-    $route() {
-      this.index = this.$route.name;
+  export default {
+    name: "Header",
+    components: {
+      LoginForm,
     },
-  },
-  methods: {
-    routerChange(name) {
-      if (name != this.$route.name) {
-        let params = {};
-        if (name == "Address") params["addr"] = "0x0";
-        this.$router.push({ name, params });
-      }
+    data: () => ({
+      index: "Home",
+    }),
+    watch: {
+      index: "routerChange",
+      $route() {
+        this.index = this.$route.name;
+      },
     },
-  },
-};
+    methods: {
+      routerChange(name) {
+        if (name != this.$route.name) {
+          let params = {};
+          if (name == "Address") params["addr"] = "0x0";
+          this.$router.push({
+            name,
+            params
+          });
+        }
+      },
+    },
+  };
 </script>
