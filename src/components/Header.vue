@@ -6,16 +6,16 @@
               height: 7vh;
           " alt="" />
 			</template>
-			<vs-navbar-item :active="index == '/'" id="/">
+			<vs-navbar-item :active="index == 'Home'" id="Home">
 				Home
 			</vs-navbar-item>
-			<vs-navbar-item :active="index == '/address'" id="/address">
+			<vs-navbar-item :active="index == 'Address'" id="Address">
 				Address
 			</vs-navbar-item>
-			<vs-navbar-item :active="index == '/resources'" id="/resources">
+			<vs-navbar-item :active="index == 'Resources'" id="Resources">
 				Resources
 			</vs-navbar-item>
-			<vs-navbar-item :active="index == '/about'" id="/about">
+			<vs-navbar-item :active="index == 'About'" id="About">
 				About
 			</vs-navbar-item>
 			<template #right>
@@ -35,24 +35,22 @@
       LoginForm
     },
 		data: () => ({
-			index: '/'
+			index: 'Home'
 		}),
 		watch: {
 			"index": "routerChange",
-			"$router": "indexChange"
+			$route() {
+        this.index = this.$route.name;
+      }
 		},
 		methods: {
-			routerChange(path) {
-				if (path != this.$router.path)
-					this.$router.push(path);
-			},
-			indexChange() {
-				this.index = this.$router.path;
+			routerChange(name) {
+				if (name != this.$route.name){
+          let params = {}
+          if (name == "Address") params["addr"] = "0x0";
+          this.$router.push({name, params});
+        }
 			}
-		},
-		created() {
-			if (this.$router.path)
-				this.index = this.$router.path;
 		}
 	};
 </script>

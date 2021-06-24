@@ -22,7 +22,7 @@
     }),
     methods: {
       search() {
-    
+        this.$router.push({ name: 'Address', params: { addr: this.keyword }})
       }
     }
   }
