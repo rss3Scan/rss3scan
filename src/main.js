@@ -1,7 +1,10 @@
 import Vue from "vue";
 import Vuesax from "vuesax";
 import App from "./App.vue";
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 import router from "./router";
+
 import "vuesax/dist/vuesax.css"; //Vuesax styles
 import "@/assets/css/theme.css";
 import "boxicons/css/boxicons.css"; //Boxicons styles
@@ -16,6 +19,7 @@ Vue.use(Vuesax, {
     dark: "rgb(36, 33, 69)",
   },
 });
+Vue.use(VueAxios, axios);
 
 new Vue({
   router,

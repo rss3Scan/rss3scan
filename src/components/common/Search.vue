@@ -2,7 +2,7 @@
   <section class="search-section">
     <slot></slot>
     <div justify="center" class="search">
-      <vs-input type="search" v-model="keyword" placeholder="Search by Address">
+      <vs-input type="search" success v-model="keyword" @keyup.enter="search()" placeholder="Search by Address">
         <template #icon>
           <i class='bx bx-search-alt'></i>
         </template>
@@ -22,7 +22,25 @@
     }),
     methods: {
       search() {
-        this.$router.push({ name: 'Address', params: { addr: this.keyword }})
+        if (/^0x[0-9a-fA-F]{40}$/.test(this.keyword)) {
+          this.$router.push({
+            name: 'Address',
+            params: {
+              addr: this.keyword
+            }
+          })
+          return 
+        }
+        this.error("Invalid Address", "Please Check Your Input.")
+      },
+      error(title, text) {
+        this.$vs.notification({
+          progress: 'auto',
+          color: "danger",
+          position: 'top-center',
+          title: title,
+          text: text
+        })
       }
     }
   }

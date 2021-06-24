@@ -14,7 +14,7 @@
       </ul>
     </div>
     <div class="copy">
-      <span class="span-copy"> © 2021 Natural Selection Labs </span>
+      <span class="span-copy"> © 2021 RSS3Scan </span>
     </div>
   </footer>
 </template>
@@ -105,7 +105,6 @@ export default {
     align-items: center;
     justify-content: space-between;
     font-size: .8rem;
-    padding: 20px
 }
 
 .footer .copy .span-copy,.footer .copy span {
