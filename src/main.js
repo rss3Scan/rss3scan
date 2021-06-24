@@ -4,6 +4,7 @@ import App from "./App.vue";
 import router from "./router";
 import "vuesax/dist/vuesax.css"; //Vuesax styles
 import "@/assets/css/theme.css";
+import 'boxicons/css/boxicons.css'; //Boxicons styles
 
 Vue.config.productionTip = false;
 Vue.use(Vuesax, {

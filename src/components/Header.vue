@@ -20,14 +20,20 @@
 			</vs-navbar-item>
 			<template #right>
 				<!-- <vs-button flat></vs-button> | -->
-				<vs-button gradient>Sign In</vs-button>
+				<vs-button gradient @click="$refs.login.$emit('show')">Sign In</vs-button>
 			</template>
 		</vs-navbar>
+    <LoginForm ref="login" />
 	</div>
 </template>
 <script>
+  import LoginForm from '@/components/LoginForm'
+  
 	export default {
 		name: "Header",
+    components:{
+      LoginForm
+    },
 		data: () => ({
 			index: '/'
 		}),
