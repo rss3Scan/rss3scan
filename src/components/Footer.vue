@@ -55,8 +55,13 @@ export default {
               new: true,
             },
             {
-              text: "Telegram",
-              link: "https://github.com/NaturalSelectionLabs/RSS3",
+              text: "Telegram (RSS3)",
+              link: "https://t.me/joinchat/jhhncmdayvNlMDgx",
+              new: true,
+            },
+            {
+              text: "Telegram (RSS3scan)",
+              link: "https://t.me/rss3scan",
               new: true,
             },
             {
@@ -109,7 +114,7 @@ export default {
 
 .footer ul li {
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 800;
   opacity: 0.8;
   margin: 5px 0;
 }
@@ -118,13 +123,14 @@ export default {
   font-size: 0.85rem;
   opacity: 0.5;
   transition: all 0.25s ease;
-  font-weight: 400;
+  font-weight: 600;
   padding: 5px;
   display: block;
 }
 
 .footer ul li a:hover {
   color: rgba(var(--vs-primary), 1) !important;
+  opacity: 0.7;
 }
 
 @media (max-width: 800px) {

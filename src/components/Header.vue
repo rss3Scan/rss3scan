@@ -1,10 +1,11 @@
 <template>
   <div class="center">
-    <vs-navbar center-collapsed not-line v-model="index">
+    <vs-navbar center-collapsed not-line v-model="index" id="logo">
       <template #left>
         <router-link to="/">
-          <img src="@/assets/RSS3_Scan.svg" style="height: 7vh" alt="" />
+          <img src="@/assets/logo.png" style="max-height: 7vh" alt="logo" />
         </router-link>
+        <p>RSS3://Scan</p>
       </template>
       <vs-navbar-item :active="index == 'Home'" id="Home">
         Home
@@ -20,7 +21,10 @@
       </vs-navbar-item>
       <template #right>
         <!-- <vs-button flat></vs-button> | -->
-        <vs-button gradient @click="$refs.login.$emit('show')"
+        <vs-button
+          style="color: #000"
+          gradient
+          @click="$refs.login.$emit('show')"
           >Sign In</vs-button
         >
       </template>
@@ -56,3 +60,10 @@ export default {
   },
 };
 </script>
+<style>
+@media (max-width: 600px) {
+  #logo p {
+    display: none;
+  }
+}
+</style>
