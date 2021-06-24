@@ -11,3 +11,7 @@ a {
 body .dark{
 
 }
+*{
+  padding: 0;
+  margin: 0;
+}

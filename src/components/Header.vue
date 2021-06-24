@@ -3,8 +3,8 @@
     <vs-navbar center-collapsed not-line v-model="index">
       <template #left>
         <router-link to="/">
-			<img src="@/assets/RSS3_Scan.svg" style="height: 7vh" alt="" />
-		</router-link>
+          <img src="@/assets/RSS3_Scan.svg" style="height: 7vh" alt="" />
+        </router-link>
       </template>
       <vs-navbar-item :active="index == 'Home'" id="Home">
         Home
