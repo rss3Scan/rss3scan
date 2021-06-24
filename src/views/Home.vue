@@ -7,26 +7,24 @@
 </template>
 
 <script>
-  import Search from '@/components/common/Search'
-  // @ is an alias to /src
-  export default {
-    name: "Home",
-    components: {
-      Search
-    },
-    data: () => ({
-      
-    }),
-    methods: {
-    }
-  };
+import Search from "@/components/common/Search";
+// @ is an alias to /src
+export default {
+  name: "Home",
+  components: {
+    Search,
+  },
+  data: () => ({}),
+  methods: {},
+};
 </script>
 
 <style lang="scss">
-  .home {}
+.home {
+}
 
-  .main-logo {
-    max-width: 100%;
-    height: auto;
-  }
+.main-logo {
+  max-width: 100%;
+  height: auto;
+}
 </style>

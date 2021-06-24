@@ -1,8 +1,17 @@
 html,
-body {
-  font-family: "Montserrat", sans-serif !important;
-}
-
+body,
 button {
   font-family: "Montserrat", sans-serif !important;
+}
+a {
+  text-decoration: none;
+}
+
+/* dark theme */
+body .dark{
+
+}
+*{
+  padding: 0;
+  margin: 0;
 }
