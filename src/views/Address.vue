@@ -18,22 +18,32 @@
       {{ data.date_updated }}<br />
       <div v-if="data.profile.tags" class="tags">
         Tags:
-        <vs-button v-for="tag in data.profile.tags" :key="tag" color="rgb(59,222,200)">
-          {{ tag }}
-        </vs-button>
+        <div class="tags-list">
+          <vs-button v-for="tag in data.profile.tags" :key="tag" color="rgb(59,222,200)">
+            {{ tag }}
+          </vs-button>
+        </div>
       </div>
     </vs-alert>
 
     <div class="items-section">
       <h2 class="title"> Items </h2>
       <div class="items" v-if="data.items">
-        <vs-card v-for="(item, index) in data.items" :key="index" class="item">
+        <vs-card v-for="(item, index) in data.items.filter((ele) => {
+          return !ele.upstream
+        })" :key="index" class="item">
           <template #title>
-            <h3 class="text-overflow">{{ item.id|parseItemId }}</h3>
+            <h3>#{{ item.id|parseItemId }} {{ item.title }}</h3>
           </template>
           <template #text>
             <p>
-              {{ }}
+              {{ item.authors.map((ele) => {
+                if(ele == data.id) return data.profile.name;
+                return ele;
+              }).join(",") }}
+            </p>
+            <p>
+              {{ item.summary }}
             </p>
           </template>
         </vs-card>
@@ -59,99 +69,33 @@
     },
     methods: {
       load() {
-        if (this.address == "0x0") {
-          this.data = {
-            id: "0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944",
-            "@version": "rss3.io/version/v0.1.1",
-            date_created: "2009-05-01T00:00:00.000Z",
-            date_updated: "2021-05-08T16:56:35.529Z",
-
-            profile: {
-              name: "DIYgod",
-              avatar: ["dweb://diygod.jpg", "https://example.com/diygod.jpg"],
-              bio: "写代码是热爱，写到世界充满爱！",
-              tags: ["demo", "lovely", "technology"],
-            },
-
-            items: [{
-                id: "0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944-item-1",
-                authors: ["0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944"],
-                summary: "Yes!!",
-                date_published: "2021-05-09T16:56:35.529Z",
-                date_modified: "2021-05-09T16:56:35.529Z",
-
-                type: "comment",
-                upstream: "0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944-item-0",
-              },
-              {
-                id: "0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944-item-0",
-                authors: ["0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944"],
-                title: "Hello World",
-                summary: "Hello, this is the first item of RSS3.",
-                date_published: "2021-05-08T16:56:35.529Z",
-                date_modified: "2021-05-08T16:56:35.529Z",
-
-                contents: [{
-                    address: [
-                      "dweb://never.html",
-                      "https://example.com/never.html",
-                    ],
-                    mime_type: "text/html",
-                  },
-                  {
-                    address: ["dweb://never.jpg"],
-                    mime_type: "image/jpeg",
-                  },
-                ],
-
-                "@contexts": [{
-                    type: "comment",
-                    list: "0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944-context@0@comment-0",
-                  },
-                  {
-                    type: "like",
-                    list: "0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944-context@0@like-0",
-                  },
-                ],
-              },
-            ],
-            items_next: "0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944-items-0",
-
-            links: [{
-                type: "follow",
-                list: ["0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"],
-              },
-              {
-                type: "superfollow",
-                list: ["0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"],
-              },
-            ],
-            "@backlinks": [{
-              type: "follow",
-              list: "0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944-backlink@follow-0",
-            }, ],
-
-            assets: [{
-              type: "some experience point",
-              content: "100",
-            }, ],
-          };
-          this.loading.close();
-          return;
-        }
         this.axios.get("https://hub.rss3.io/" + this.address).then((response) => {
           this.data = response.data;
           this.loading.close();
+        }).catch((err) => {
+          console.log(err)
+          this.error("Address Error", "Please Check Your Input Again!")
+          this.loading.close();
+          this.$router.push({"name": "Home"})
+        })
+      },
+      error(title, text) {
+        this.$vs.notification({
+          progress: "auto",
+          color: "danger",
+          position: "top-center",
+          title: title,
+          text: text,
         });
       }
     },
     computed: {
-      
+
     },
     filters: {
       parseItemId(id) {
         const splited = id.split('-');
-        return "item-" + splited[2] !== undefined ? parseInt(splited[2]) : Infinity
+        return splited[2] !== undefined ? parseInt(splited[2]) : Infinity
       },
       textOmit(data) {
         let len = data.length;
@@ -178,7 +122,7 @@
   }
 
   .address-content {
-    max-width: 900px;
+    max-width: 70rem;
     margin: 0 auto;
     padding: 2rem 2.5rem;
 
@@ -223,21 +167,36 @@
         display: flex;
         height: auto;
         align-items: center;
+        width: 100%;
+
+        .tags-list {
+          display: -webkit-box;
+          overflow-x: auto;
+        }
       }
 
       .vs-alert__content {
         display: flex;
         text-align: start;
+        min-height: auto !important;
+
+        .vs-alert__content__text {
+          width: 100%;
+        }
       }
 
       margin: {
         top: 10px;
       }
+
+      height: auto !important;
     }
 
 
 
     .items-section {
+      word-break: break-all;
+
       margin: {
         top: 3rem;
       }

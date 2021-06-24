@@ -10,12 +10,12 @@
       <vs-navbar-item :active="index == 'Home'" id="Home">
         Home
       </vs-navbar-item>
-      <vs-navbar-item :active="index == 'Address'" id="Address">
+      <vs-navbar-item :active="index == 'Address'" id="Address" disabled>
         Address
       </vs-navbar-item>
-      <vs-navbar-item :active="index == 'Resources'" id="Resources">
+      <!--<vs-navbar-item :active="index == 'Resources'" id="Resources">
         Resources
-      </vs-navbar-item>
+      </vs-navbar-item>-->
       <vs-navbar-item :active="index == 'About'" id="About">
         About
       </vs-navbar-item>
@@ -51,11 +51,8 @@
     methods: {
       routerChange(name) {
         if (name != this.$route.name) {
-          let params = {};
-          if (name == "Address") params["addr"] = "0x0";
           this.$router.push({
-            name,
-            params
+            name
           });
         }
       },
