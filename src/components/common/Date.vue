@@ -1,18 +1,12 @@
 <template>
   <div class="date-component">
-    <vs-button border color="rgb(59,222,200)" :active="true">
-      <slot></slot>
-    </vs-button>
+    <slot></slot>
     <div class="date-show">
-      <vs-button border color="rgb(59,222,200)" :active="true">
-        {{ year }}
-      </vs-button>
-      <vs-button border color="rgb(59,222,200)" :active="true">
-        {{ month }}
-      </vs-button>
-      <vs-button border color="rgb(59,222,200)" :active="true">
-        {{ day }}
-      </vs-button>
+      {{ year }}
+      :
+      {{ month }}
+      :
+      {{ day }}
     </div>
   </div>
 </template>
@@ -51,9 +45,14 @@
   .date-component {
     display: flex;
     align-items: center;
-
+    margin: {
+      right: 15px;
+    }
     .date-show {
-      display: -webkit-box;
+      margin: {
+        left: 10px;
+      }
+      display: block;
     }
   }
 </style>

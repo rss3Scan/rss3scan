@@ -12,16 +12,41 @@
       <vs-alert>
         {{ item.summary|noNull("Empty Summary") }}
       </vs-alert>
-      
-      
     </div>
-    
+    <div class="contents" v-if="item.contents">
+      <div class="content" v-for="(content, index) in item.contents" :key="index">
+        <WebPage :src="content.address" v-if="['application/pdf', 'text/html', 'application/xml', 'text/plain', 'text/xml', 'text/csv', 'text/css'].some((ele) => {return content.mime_type == ele})" />
+        
+        <div class="unsupport" v-else>
+          <vs-alert color="danger">
+            <template #title>
+              Unsupported Type
+            </template>
+            This MIME type is not supported. Please contact us if this is a valid mime type.
+            <br>
+          </vs-alert>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <hr>
+      <Date :date="item.date_published">Published at </Date>
+      <Date :date="item.date_modified">Modified at </Date>
+    </div>
+
   </section>
 </template>
 
 <script>
+  import Date from '@/components/common/Date'
+  import WebPage from '@/components/item/webpage'
+
   export default {
     name: "Item",
+    components: {
+      Date,
+      WebPage
+    },
     data: () => ({
       item: null,
       loading: null,
@@ -68,7 +93,8 @@
 
 <style lang="scss">
   .items-section {
-    max-width: 70rem;
+    max-width: 40rem;
+    //max-width: 70rem;
     margin: 0 auto;
     padding: 2rem 2.5rem;
 
@@ -79,7 +105,6 @@
     }
 
     .summary {
-      max-width: 40rem;
       margin: auto;
       height: auto !important;
 
@@ -93,15 +118,40 @@
         }
       }
 
-      .vs-alert__content {
-        display: flex;
-        text-align: start;
-        min-height: auto !important;
+      .vs-alert {
+        height: auto !important;
 
-        .vs-alert__content__text {
-          width: 100%;
-          color: black;
+        .vs-alert__content {
+          display: flex;
+          text-align: start;
+          min-height: auto !important;
+
+          .vs-alert__content__text {
+            width: 100%;
+            color: black;
+          }
         }
+      }
+    }
+
+    .contents {
+      margin-top: 10px;
+
+      .content {
+        padding-top: 10px;
+
+        .unsupport {
+          padding: {
+            top: 2.8rem;
+            bottom: 3rem;
+          }
+        }
+      }
+    }
+
+    .foot {
+      margin: {
+        top: 1rem;
       }
     }
   }
