@@ -5,7 +5,9 @@
         <router-link to="/">
           <img src="@/assets/logo.png" style="max-height: 7vh" alt="logo" />
         </router-link>
-        <p>RSS3://Scan</p>
+        <router-link to="/">
+          <span>RSS3://Scan</span>
+        </router-link>
       </template>
       <vs-navbar-item :active="index == 'Home'" id="Home">
         Home
@@ -32,37 +34,41 @@
   </div>
 </template>
 <script>
-  import LoginForm from "@/components/LoginForm";
+import LoginForm from "@/components/LoginForm";
 
-  export default {
-    name: "Header",
-    components: {
-      LoginForm,
+export default {
+  name: "Header",
+  components: {
+    LoginForm,
+  },
+  data: () => ({
+    index: "Home",
+  }),
+  watch: {
+    index: "routerChange",
+    $route() {
+      this.index = this.$route.name;
     },
-    data: () => ({
-      index: "Home",
-    }),
-    watch: {
-      index: "routerChange",
-      $route() {
-        this.index = this.$route.name;
-      },
+  },
+  methods: {
+    routerChange(name) {
+      if (name != this.$route.name) {
+        this.$router.push({
+          name,
+        });
+      }
     },
-    methods: {
-      routerChange(name) {
-        if (name != this.$route.name) {
-          this.$router.push({
-            name
-          });
-        }
-      },
-    },
-  };
+  },
+};
 </script>
 <style>
 @media (max-width: 600px) {
-  #logo p {
+  #logo span {
     display: none;
   }
+}
+#logo span {
+  -webkit-text-stroke: 0.2px #282828;
+  color: var(--vs-primary);
 }
 </style>
