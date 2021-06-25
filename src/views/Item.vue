@@ -1,6 +1,7 @@
 <template>
   <section class="items-section" v-if="item">
     <h1 class="title"> {{ item.title|noNull("No Title") }} </h1>
+    <small>{{ item.id }}</small>
     <div class="summary">
       <div class="author">
         Authors:
@@ -15,8 +16,8 @@
     </div>
     <div class="contents" v-if="item.contents">
       <div class="content" v-for="(content, index) in item.contents" :key="index">
-        <WebPage :src="content.address" v-if="['application/pdf', 'text/html', 'application/xml', 'text/plain', 'text/xml', 'text/csv', 'text/css'].some((ele) => {return content.mime_type == ele})" />
-        
+        <WebPage :content="content" v-if="['application/pdf', 'text/html', 'application/xml', 'text/plain', 'text/xml', 'text/csv', 'text/css'].some((ele) => {return content.mime_type == ele})" />
+        <Audio :content="content" v-else-if="['audio/ogg', 'audio/mpeg'].some((ele) => {return content.mime_type == ele})"/>
         <div class="unsupport" v-else>
           <vs-alert color="danger">
             <template #title>
@@ -40,12 +41,14 @@
 <script>
   import Date from '@/components/common/Date'
   import WebPage from '@/components/item/webpage'
+  import Audio from '@/components/item/audio'
 
   export default {
     name: "Item",
     components: {
       Date,
-      WebPage
+      WebPage,
+      Audio
     },
     data: () => ({
       item: null,

@@ -1,18 +1,26 @@
 <template>
-  <iframe :src="src[0]" ref="page" class="web-page" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <div>
+    {{ name }}
+    <iframe :src="src" ref="page" class="web-page" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+  </div>
 </template>
 
 <script>
   export default {
     name: "WebPage",
     props: {
-      src: {
-        type: String
+      content: {
+        type: Object
       }
     },
-    data: () => ({
-      
-    }),
+    data() {
+      return {
+        src: this.content.address[0],
+        name: this.content.name
+      }
+    },
     methods: {
 
     }

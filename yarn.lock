@@ -8756,6 +8756,11 @@ vm-browserify@^1.0.1:
   resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.2.tgz?cache=0&sync_timestamp=1611018248798&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvm-browserify%2Fdownload%2Fvm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha1-eGQcSIuObKkadfUR56OzKobl3aA=
 
+vue-aplayer@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/vue-aplayer/-/vue-aplayer-1.6.1.tgz#17fd419b091e09425bc737fa9e84f55565160df6"
+  integrity sha512-c+ZAwZ63bVDsKkcHeKLAonIL2gY4nrVRdKypoPRXSkh+8B1cVhFT2tx8HSTNT6eX6WZyDtaYrEJfcgetrfvcdQ==
+
 vue-axios@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/vue-axios/-/vue-axios-3.2.4.tgz#2334158db8ac2a0f603aa431c2626fbf6d766724"
