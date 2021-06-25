@@ -48,7 +48,7 @@ export default {
 }
 #nav {
   margin-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 #nav a {

@@ -10,12 +10,16 @@
       <p class="text text-overflow">Address {{ data.id }}</p>
     </div>
     <hr />
+
     <vs-alert gradient solid>
       <template #title>
         {{ data.profile.bio }}
       </template>
-      Created Date: {{ data.date_created }} <span class="space"></span> Updated Date:
-      {{ data.date_updated }}<br />
+      <div style="display: flex; align-items: center; flex-wrap: wrap;">
+        <Date :date="data.date_created">Created Date: </Date>
+        <Date :date="data.date_updated">Updated Date: </Date>
+      </div>
+      <br />
       <div v-if="data.profile.tags" class="tags">
         Tags:
         <div class="tags-list">
@@ -31,7 +35,8 @@
       <div class="items" v-if="data.items">
         <vs-card v-for="(item, index) in data.items.filter((ele) => {
           return !ele.upstream
-        })" :key="index" class="item">
+        })" :key="index" class="item"
+          @click='$router.push({"name": "Item", params: {"item": parseItemId(item.id), "addr": data.id}})'>
           <template #title>
             <h3>#{{ item.id|parseItemId }} {{ item.title }}</h3>
           </template>
@@ -43,7 +48,7 @@
               }).join(",") }}
             </p>
             <p>
-              {{ item.summary }}
+              {{ item.summary|textOmit(124) }}
             </p>
           </template>
         </vs-card>
@@ -53,8 +58,13 @@
 </template>
 
 <script>
+  import Date from '@/components/common/Date'
+
   export default {
     name: "Address",
+    components: {
+      Date
+    },
     data: () => ({
       loading: null,
       address: "",
@@ -76,7 +86,9 @@
           console.log(err)
           this.error("Address Error", "Please Check Your Input Again!")
           this.loading.close();
-          this.$router.push({"name": "Home"})
+          this.$router.push({
+            "name": "Home"
+          })
         })
       },
       error(title, text) {
@@ -87,20 +99,22 @@
           title: title,
           text: text,
         });
+      },
+      parseItemId(id) {
+        const splited = id.split('-');
+        return splited[2] !== undefined ? parseInt(splited[2]) : Infinity
       }
     },
-    computed: {
-
-    },
+    computed: {},
     filters: {
       parseItemId(id) {
         const splited = id.split('-');
         return splited[2] !== undefined ? parseInt(splited[2]) : Infinity
       },
-      textOmit(data) {
+      textOmit(data, length) {
         let len = data.length;
-        if (len > 40) {
-          return data.slice(0, 40) + "...";
+        if (len > length) {
+          return data.slice(0, length) + "...";
         }
         return data;
       },
@@ -210,6 +224,8 @@
 
         .item {
           margin: 1.25rem;
+          max-width: 20rem;
+          max-height: 150px;
         }
       }
 

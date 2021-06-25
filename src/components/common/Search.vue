@@ -27,15 +27,36 @@ export default {
     keyword: "",
   }),
   methods: {
+    parse(id) {
+        const splited = id.split('-');
+        return {
+            persona: splited[0],
+            type: splited[1] || 'index',
+            index: splited[2] !== undefined ? parseInt(splited[2]) : 0,
+        };
+    },
     search() {
-      if (/^0x[0-9a-fA-F]{40}$/.test(this.keyword)) {
-        this.$router.push({
-          name: "Address",
-          params: {
-            addr: this.keyword,
-          },
-        });
-        return;
+      let id = this.parse(this.keyword)
+      if (/^0x[0-9a-fA-F]{40}$/.test(id.persona)) {
+        if(id.type == "index"){
+          this.$router.push({
+            name: "Address",
+            params: {
+              addr: id.persona,
+            },
+          });
+          return;
+        }else if(id.type == "item"){
+          this.$router.push({
+            name: "Item",
+            params: {
+              addr: id.persona,
+              item: id.index
+            },
+          });
+          return;
+        }
+        this.error("Unrecognized Type", "Please Check Your Input.");
       }
       this.error("Invalid Address", "Please Check Your Input.");
     },

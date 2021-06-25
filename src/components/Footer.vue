@@ -147,10 +147,8 @@ export default {
   }
 }
 
-@media (max-width: 600px) {
-  .footer {
-    padding-bottom: 20px !important;
-  }
+.footer {
+  padding-bottom: 20px !important;
 }
 
 @media (max-width: 500px) {
@@ -197,10 +195,5 @@ export default {
     padding: 0 10px;
     width: calc(100% - 20px);
   }
-}
-
-.darken .con-mobile,
-.darken svg.desktop {
-  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.17) !important;
 }
 </style>
