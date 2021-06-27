@@ -27,7 +27,8 @@
           style="color: #000"
           gradient
           @click="$refs.login.$emit('show')"
-          >Sign In</vs-button>
+          >Sign In</vs-button
+        >
       </template>
     </vs-navbar>
     <LoginForm ref="login" />
