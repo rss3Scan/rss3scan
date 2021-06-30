@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Search>
-      <img alt="Scan logo" src="@/assets/RSS3_Scan.svg" class="main-logo" />
+      <img alt="Scan logo" src="@/assets/logo_title.svg" class="main-logo" />
     </Search>
   </div>
 </template>

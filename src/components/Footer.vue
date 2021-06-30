@@ -89,7 +89,10 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border-radius: 0 30px 0 0;
+  border-radius: 30px 30px 0 0;
+  background: #f5f5f5;
+  padding-top: 15px;
+  padding-bottom: 20px;
 }
 
 .footer .footer__uls {
@@ -100,6 +103,7 @@ export default {
 
 .footer .span-copy {
   font-size: 0.8rem;
+  color: #afafaf;
 }
 
 .footer ul {
@@ -145,10 +149,6 @@ export default {
   .footer ul {
     width: calc(50% - 20px);
   }
-}
-
-.footer {
-  padding-bottom: 20px !important;
 }
 
 @media (max-width: 500px) {
