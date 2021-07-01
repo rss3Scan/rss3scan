@@ -7,7 +7,9 @@
         </vs-avatar>
         {{ data.profile.name }}
       </div>
-      <p class="text text-overflow">Address {{ data.id }}</p>
+      <p class="text text-overflow">
+        {{ $t("address.address") }} {{ data.id }}
+      </p>
     </div>
     <hr />
 
@@ -16,12 +18,12 @@
         {{ data.profile.bio }}
       </template>
       <div style="display: flex; align-items: center; flex-wrap: wrap">
-        <Date :date="data.date_created">Created Date: </Date>
-        <Date :date="data.date_updated">Updated Date: </Date>
+        <Date :date="data.date_created">{{ $t("address.created") }}</Date>
+        <Date :date="data.date_updated">{{ $t("address.modified") }}</Date>
       </div>
       <br />
       <div v-if="data.profile.tags" class="tags">
-        Tags:
+        {{ $t("address.tags") }}
         <div class="tags-list">
           <vs-button
             v-for="tag in data.profile.tags"
@@ -35,7 +37,7 @@
     </vs-alert>
 
     <div class="items-section">
-      <h2 class="title">Items</h2>
+      <h2 class="title">{{ $t("address.items") }}</h2>
       <div class="items" v-if="data.items">
         <vs-card
           v-for="(item, index) in data.items.filter((ele) => {
@@ -104,6 +106,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          // need i18n
           this.error("Address Error", "Please Check Your Input Again!");
           this.loading.close();
           this.$router.push({

@@ -1,13 +1,7 @@
 <template>
   <div class="date-component">
     <slot></slot>
-    <div class="date-show">
-      {{ year }}
-      :
-      {{ month }}
-      :
-      {{ day }}
-    </div>
+    <div class="date-show">{{ year }}-{{ month }}-{{ day }}</div>
   </div>
 </template>
 

@@ -7,7 +7,7 @@
         success
         v-model="keyword"
         @keyup.enter="search()"
-        placeholder="Search by Address"
+        :placeholder="$t('search.placeholder')"
       >
         <template #icon>
           <i class="bx bx-search-alt"></i>
@@ -56,8 +56,10 @@ export default {
           });
           return;
         }
+        // need i18n
         this.error("Unrecognized Type", "Please Check Your Input.");
       }
+      // need i18n
       this.error("Invalid Address", "Please Check Your Input.");
     },
     error(title, text) {

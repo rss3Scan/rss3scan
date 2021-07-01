@@ -4,7 +4,7 @@
     <div class="footer__uls">
       <ul v-for="(link, index) in links" :key="index">
         <li class="title">
-          {{ link.title }}
+          {{ $t("footer." + link.title) }}
         </li>
         <li v-for="(item, i) in link.items" :key="i">
           <a :target="item.new ? '_blank' : ''" :href="item.link">
