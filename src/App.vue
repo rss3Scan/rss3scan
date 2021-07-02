@@ -45,6 +45,7 @@ export default {
 }
 #view {
   flex: 1 1 auto;
+  margin-top: 10px;
 }
 #nav {
   margin-top: 30px;
