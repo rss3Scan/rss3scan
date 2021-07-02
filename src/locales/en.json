@@ -26,5 +26,9 @@
     "nosummary": "No Summary",
     "ut_title": "Unsupported Type",
     "ut_description": "This MIME type is not supported. Please contact us if this is a valid mime type."
+  },
+  "about": {
+    "title": "About US",
+    "content": "<p>Rss3scan is an Explorer and Analytics Platform for RSS3 Network</p>"
   }
 }

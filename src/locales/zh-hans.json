@@ -26,5 +26,9 @@
   },
   "search": {
     "placeholder": "搜索地址"
+  },
+  "about": {
+    "title": "关于我们",
+    "content": "<p>Rss3scan 是RSS3网络的资源管理器和分析平台。</p>"
   }
 }

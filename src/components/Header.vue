@@ -1,6 +1,6 @@
 <template>
   <div class="center">
-    <vs-navbar center-collapsed not-line v-model="index" id="logo">
+    <vs-navbar center-collapsed not-line v-model="index" id="header">
       <template #left>
         <router-link to="/">
           <img src="@/assets/logo.png" style="max-height: 7vh" alt="logo" />
@@ -63,12 +63,15 @@ export default {
 };
 </script>
 <style>
+#header {
+  background: #fbfbfb;
+}
 @media (max-width: 600px) {
-  #logo span {
+  #header span {
     display: none;
   }
 }
-#logo span {
+#header span {
   -webkit-text-stroke: 0.2px #282828;
   color: var(--vs-primary);
 }
