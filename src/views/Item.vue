@@ -1,10 +1,10 @@
 <template>
   <section class="items-section" v-if="item">
-    <h1 class="title">{{ item.title | noNull("No Title") }}</h1>
+    <h1 class="title">{{ item.title ? item.title : $t("item.notitle") }}</h1>
     <small>{{ item.id }}</small>
     <div class="summary">
       <div class="author">
-        Authors:
+        {{ $t("item.authors") }}
         <div class="author-list">
           <vs-button
             transparent
@@ -16,7 +16,7 @@
         </div>
       </div>
       <vs-alert>
-        {{ item.summary | noNull("Empty Summary") }}
+        {{ item.summary ? item.summary : $t("item.nosummary") }}
       </vs-alert>
     </div>
     <div class="contents" v-if="item.contents">
@@ -51,9 +51,8 @@
         />
         <div class="unsupport" v-else>
           <vs-alert color="danger">
-            <template #title> Unsupported Type </template>
-            This MIME type is not supported. Please contact us if this is a
-            valid mime type.
+            <template #title> {{ $t("item.ut_title") }} </template>
+            {{ $t("item.ut_description") }}
             <br />
           </vs-alert>
         </div>
@@ -61,8 +60,8 @@
     </div>
     <div class="foot">
       <hr />
-      <Date :date="item.date_published">Published at </Date>
-      <Date :date="item.date_modified">Modified at </Date>
+      <Date :date="item.date_published">{{ $t("address.created") }}</Date>
+      <Date :date="item.date_modified">{{ $t("address.modified") }}</Date>
     </div>
   </section>
 </template>
@@ -105,6 +104,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          // need i18n
           this.error("Address Error", "Please Check Your Input Again!");
           this.loading.close();
           this.$router.push({

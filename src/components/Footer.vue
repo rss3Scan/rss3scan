@@ -1,10 +1,10 @@
 <template>
   <footer class="footer">
-    <!-- fork from https://github.com/lusaxweb/vuesax-next/blob/0976043042498b9337bd3fd611f777e1788f3ba7/packages/vuepress-theme-vuesax/components/Footer.vue-->
+    <!-- fork from https://github.com/lusaxweb/vuesax-next/blob/0976043042498b9337bd3fd611f777e1788f3ba7/packages/vuepress-theme-vuesax/components/Footer.vue -->
     <div class="footer__uls">
       <ul v-for="(link, index) in links" :key="index">
         <li class="title">
-          {{ link.title }}
+          {{ $t("footer." + link.title) }}
         </li>
         <li v-for="(item, i) in link.items" :key="i">
           <a :target="item.new ? '_blank' : ''" :href="item.link">

@@ -1,0 +1,34 @@
+{
+  "address": {
+    "about": "关于",
+    "address": "地址",
+    "created": "创建于：",
+    "items": "Items",
+    "modified": "修改于：",
+    "tags": "标签："
+  },
+  "footer": {
+    "About RSS3": "关于 RSS3",
+    "Social Media": "社交媒体"
+  },
+  "header": {
+    "about": "关于",
+    "address": "地址",
+    "home": "首页",
+    "signin": "登录"
+  },
+  "item": {
+    "authors": "作者：",
+    "nosummary": "无简介",
+    "notitle": "无标题",
+    "ut_description": "这个文件类型不被支持，如果您认为是可以显示的文件，请联系我们",
+    "ut_title": "不被支持的类型"
+  },
+  "search": {
+    "placeholder": "搜索地址"
+  },
+  "about": {
+    "title": "关于我们",
+    "content": "<p>Rss3scan 是RSS3网络的资源管理器和分析平台。</p>"
+  }
+}

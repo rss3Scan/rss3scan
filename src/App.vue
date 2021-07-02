@@ -45,6 +45,7 @@ export default {
 }
 #view {
   flex: 1 1 auto;
+  margin-top: 10px;
 }
 #nav {
   margin-top: 30px;
@@ -74,5 +75,25 @@ export default {
   height: 5px;
   display: block;
   background: #fff;
+}
+@media (min-width: 1264px) {
+  .container {
+    max-width: 1185px;
+  }
+}
+@media (min-width: 960px) {
+  .container {
+    max-width: 900px;
+  }
+}
+.container {
+  width: 100%;
+  padding: 12px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.left,
+.left > * {
+  text-align: left;
 }
 </style>

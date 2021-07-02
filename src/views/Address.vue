@@ -7,7 +7,9 @@
         </vs-avatar>
         {{ data.profile.name }}
       </div>
-      <p class="text text-overflow">Address {{ data.id }}</p>
+      <p class="text text-overflow">
+        {{ $t("address.address") }} {{ data.id }}
+      </p>
     </div>
     <hr />
 
@@ -16,12 +18,12 @@
         {{ data.profile.bio }}
       </template>
       <div style="display: flex; align-items: center; flex-wrap: wrap">
-        <Date :date="data.date_created">Created Date: </Date>
-        <Date :date="data.date_updated">Updated Date: </Date>
+        <Date :date="data.date_created">{{ $t("address.created") }}</Date>
+        <Date :date="data.date_updated">{{ $t("address.modified") }}</Date>
       </div>
       <br />
       <div v-if="data.profile.tags" class="tags">
-        Tags:
+        {{ $t("address.tags") }}
         <div class="tags-list">
           <vs-button
             v-for="tag in data.profile.tags"
@@ -33,16 +35,22 @@
         </div>
       </div>
     </vs-alert>
-
-    <div class="items-section">
-      <h2 class="title">Items</h2>
-      <div class="items" v-if="data.items">
+    <h2 class="title">{{ $t("address.items") }}</h2>
+    <vs-row>
+      <vs-col
+        class="card"
+        v-for="(item, index) in data.items.filter((ele) => {
+          return !ele.upstream;
+        })"
+        :key="index"
+        vs-type="flex"
+        vs-justify="center"
+        vs-align="center"
+        lg="4"
+        sm="6"
+        xs="10"
+      >
         <vs-card
-          v-for="(item, index) in data.items.filter((ele) => {
-            return !ele.upstream;
-          })"
-          :key="index"
-          class="item"
           @click="
             $router.push({
               name: 'Item',
@@ -69,8 +77,8 @@
             </p>
           </template>
         </vs-card>
-      </div>
-    </div>
+      </vs-col>
+    </vs-row>
   </section>
 </template>
 
@@ -104,6 +112,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          // need i18n
           this.error("Address Error", "Please Check Your Input Again!");
           this.loading.close();
           this.$router.push({
@@ -142,7 +151,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .space {
   width: 10px;
   height: 1px;
@@ -225,40 +234,9 @@ export default {
 
     height: auto !important;
   }
-
-  .items-section {
-    word-break: break-all;
-
-    margin: {
-      top: 3rem;
-    }
-
-    .items {
-      display: flex;
-
-      flex: {
-        wrap: wrap;
-      }
-
-      .item {
-        margin: 1.25rem;
-        max-width: 20rem;
-        max-height: 150px;
-      }
-    }
-
-    .title {
-      width: 100%;
-
-      margin: {
-        top: 1.5rem;
-        bottom: 1rem;
-      }
-    }
-
-    .vs-card {
-      max-width: 100%;
-    }
-  }
+}
+.card {
+  padding-bottom: 10px;
+  margin: auto;
 }
 </style>
