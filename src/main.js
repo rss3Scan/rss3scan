@@ -9,6 +9,7 @@ import "vuesax/dist/vuesax.css"; //Vuesax styles
 import "@/assets/css/theme.css";
 import "boxicons/css/boxicons.css"; //Boxicons styles
 import i18n from "./i18n";
+import "./registerServiceWorker";
 
 Vue.config.productionTip = false;
 Vue.use(Vuesax, {
