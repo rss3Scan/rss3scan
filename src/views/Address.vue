@@ -1,40 +1,42 @@
 <template>
   <section class="address-content" v-if="data">
-    <div class="address-show">
-      <div class="address-profile">
-        <vs-avatar>
-          <img :src="data.profile.avatar[0]" alt="" />
-        </vs-avatar>
-        {{ data.profile.name }}
-      </div>
-      <p class="text text-overflow">
-        {{ $t("address.address") }} {{ data.id }}
-      </p>
-    </div>
-    <hr />
-
-    <vs-alert gradient solid>
-      <template #title>
-        {{ data.profile.bio }}
-      </template>
-      <div style="display: flex; align-items: center; flex-wrap: wrap">
-        <Date :date="data.date_created">{{ $t("address.created") }}</Date>
-        <Date :date="data.date_updated">{{ $t("address.modified") }}</Date>
-      </div>
-      <br />
-      <div v-if="data.profile.tags" class="tags">
-        {{ $t("address.tags") }}
-        <div class="tags-list">
-          <vs-button
-            v-for="tag in data.profile.tags"
-            :key="tag"
-            color="rgb(59,222,200)"
-          >
-            {{ tag }}
-          </vs-button>
+    <template v-if="data.profile">
+      <div class="address-show">
+        <div class="address-profile">
+          <vs-avatar>
+            <img :src="data.profile.avatar[0]" alt="" />
+          </vs-avatar>
+          {{ data.profile.name }}
         </div>
+        <p class="text text-overflow">
+          {{ $t("address.address") }} {{ data.id }}
+        </p>
       </div>
-    </vs-alert>
+      <hr />
+
+      <vs-alert gradient solid>
+        <template #title>
+          {{ data.profile.bio }}
+        </template>
+        <div style="display: flex; align-items: center; flex-wrap: wrap">
+          <Date :date="data.date_created">{{ $t("address.created") }}</Date>
+          <Date :date="data.date_updated">{{ $t("address.modified") }}</Date>
+        </div>
+        <br />
+        <div v-if="data.profile.tags" class="tags">
+          {{ $t("address.tags") }}
+          <div class="tags-list">
+            <vs-button
+              v-for="tag in data.profile.tags"
+              :key="tag"
+              color="rgb(59,222,200)"
+            >
+              {{ tag }}
+            </vs-button>
+          </div>
+        </div>
+      </vs-alert>
+    </template>
     <h2 class="title">{{ $t("address.items") }}</h2>
     <vs-row>
       <vs-col
@@ -63,14 +65,7 @@
           </template>
           <template #text>
             <p>
-              {{
-                item.authors
-                  .map((ele) => {
-                    if (ele == data.id) return data.profile.name;
-                    return ele;
-                  })
-                  .join(",")
-              }}
+              {{ item.authors | authorName(data) }}
             </p>
             <p>
               {{ item.summary | textOmit(124) }}
@@ -146,6 +141,15 @@ export default {
         return data.slice(0, length) + "...";
       }
       return data;
+    },
+    authorName(authorList, data) {
+      if (data.profile) {
+        authorList = authorList.map((ele) => {
+          if (ele == data.id) return data.profile.name;
+          return ele;
+        });
+      }
+      return authorList.join(",");
     },
   },
 };
@@ -235,6 +239,7 @@ export default {
     height: auto !important;
   }
 }
+
 .card {
   padding-bottom: 10px;
   margin: auto;
