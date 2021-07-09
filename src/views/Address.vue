@@ -3,8 +3,8 @@
     <template v-if="data.profile">
       <div class="address-show">
         <div class="address-profile">
-          <vs-avatar>
-            <img :src="data.profile.avatar[0]" alt="" />
+          <vs-avatar v-for="avatar in data.profile.avatar" :key="avatar">
+            <img v-if="avatar" :src="avatar" alt="avatar" />
           </vs-avatar>
           {{ data.profile.name }}
         </div>
@@ -102,7 +102,11 @@ export default {
       this.axios
         .get("https://hub.rss3.io/" + this.address)
         .then((response) => {
-          this.data = response.data;
+          let data = response.data;
+          if (!data.profile.avatar) {
+            data.profile.avatar = [""];
+          }
+          this.data = data;
           this.loading.close();
         })
         .catch((err) => {
