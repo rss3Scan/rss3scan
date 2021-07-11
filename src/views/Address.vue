@@ -3,8 +3,13 @@
     <template v-if="data.profile">
       <div class="address-show">
         <div class="address-profile">
-          <vs-avatar v-for="avatar in data.profile.avatar" :key="avatar">
-            <img v-if="avatar" :src="avatar" alt="avatar" />
+          <vs-avatar>
+            <img
+              v-if="avatar"
+              :src="avatar"
+              @error="fallbackAvatar()"
+              alt="avatar"
+            />
           </vs-avatar>
           {{ data.profile.name }}
         </div>
@@ -79,7 +84,7 @@
 
 <script>
 import Date from "@/components/common/Date";
-
+import createIcon from '@download/blockies';
 export default {
   name: "Address",
   components: {
@@ -89,6 +94,7 @@ export default {
     loading: null,
     address: "",
     data: null,
+    avatar: "",
   }),
   created() {
     this.loading = this.$vs.loading();
@@ -107,6 +113,7 @@ export default {
             data.profile.avatar = [""];
           }
           this.data = data;
+          this.fallbackAvatar();
           this.loading.close();
         })
         .catch((err) => {
@@ -131,6 +138,10 @@ export default {
     parseItemId(id) {
       const splited = id.split("-");
       return splited[2] !== undefined ? parseInt(splited[2]) : Infinity;
+    },
+    fallbackAvatar() {
+      let avatar = this.data.profile.avatar.shift();
+      this.avatar = avatar ? avatar : "";
     },
   },
   computed: {},
