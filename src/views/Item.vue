@@ -9,9 +9,11 @@
           <vs-button
             transparent
             v-for="author in item.authors"
-            :key="author"
-            @click="$router.push({ name: 'Address', params: { addr: author } })"
-            >{{ author }}</vs-button
+            :key="author.id"
+            @click="
+              $router.push({ name: 'Address', params: { addr: author.id } })
+            "
+            >{{ author.name }}</vs-button
           >
         </div>
       </div>
@@ -70,6 +72,7 @@
 import Date from "@/components/common/Date";
 import WebPage from "@/components/item/webpage";
 import Audio from "@/components/item/audio";
+import { fetchItem } from "../handlers/address";
 
 export default {
   name: "Item",
@@ -87,30 +90,20 @@ export default {
   created() {
     this.loading = this.$vs.loading();
     this.address = this.$route.params.addr;
-    this.id = this.$route.params.item;
+    if (this.$route.params.item.split("-").length > 2) {
+      this.id = this.$route.params.item.split("-")[2];
+    } else {
+      this.id = this.$route.params.item;
+    }
   },
   mounted() {
     this.load();
   },
   methods: {
-    load() {
-      this.axios
-        .get("https://hub.rss3.io/" + this.address)
-        .then((response) => {
-          this.item = response.data.items.find((item) => {
-            return this.parseItemId(item.id) == this.id;
-          });
-          this.loading.close();
-        })
-        .catch((err) => {
-          console.log(err);
-          // need i18n
-          this.error("Address Error", "Please Check Your Input Again!");
-          this.loading.close();
-          this.$router.push({
-            name: "Home",
-          });
-        });
+    async load() {
+      let item = await fetchItem(this.address, this.id);
+      this.item = item;
+      this.loading.close();
     },
     parseItemId(id) {
       const splited = id.split("-");
