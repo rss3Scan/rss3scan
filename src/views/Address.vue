@@ -46,10 +46,8 @@
     <vs-row>
       <vs-col
         class="card"
-        v-for="(item, index) in data.items.filter((ele) => {
-          return !ele.upstream;
-        })"
-        :key="index"
+        v-for="item in items"
+        :key="item.id"
         vs-type="flex"
         vs-justify="center"
         vs-align="center"
@@ -61,30 +59,43 @@
           @click="
             $router.push({
               name: 'Item',
-              params: { item: parseItemId(item.id), addr: data.id },
+              params: { item: item.number, addr: data.id },
             })
           "
         >
           <template #title>
-            <h3>#{{ item.id | parseItemId }} {{ item.title }}</h3>
+            <h3>#{{ item.number }} {{ item.title }}</h3>
           </template>
           <template #text>
             <p>
-              {{ item.authors | authorName(data) }}
+              {{
+                item.authors
+                  .map((x) => {
+                    return x.name;
+                  })
+                  .join(", ")
+              }}
             </p>
             <p>
-              {{ item.summary | textOmit(124) }}
+              {{ item.summary }}
             </p>
           </template>
         </vs-card>
       </vs-col>
     </vs-row>
+    <vs-button
+      v-show="items[items.length - 1].number >= 100"
+      block
+      :loading="next == 'loading'"
+      @click="load(page + 1)"
+      >load more</vs-button
+    >
   </section>
 </template>
 
 <script>
 import Date from "@/components/common/Date";
-import createIcon from '@download/blockies';
+import { fetchAddress } from "../handlers/address";
 export default {
   name: "Address",
   components: {
@@ -94,37 +105,49 @@ export default {
     loading: null,
     address: "",
     data: null,
+    authors: {},
+    items: [],
     avatar: "",
+    next: false,
+    page: 1,
   }),
   created() {
-    this.loading = this.$vs.loading();
     this.address = this.$route.params.addr;
   },
   mounted() {
     this.load();
   },
   methods: {
-    load() {
-      this.axios
-        .get("https://hub.rss3.io/" + this.address)
-        .then((response) => {
-          let data = response.data;
-          if (!data.profile.avatar) {
-            data.profile.avatar = [""];
-          }
-          this.data = data;
-          this.fallbackAvatar();
-          this.loading.close();
-        })
-        .catch((err) => {
-          console.log(err);
-          // need i18n
-          this.error("Address Error", "Please Check Your Input Again!");
-          this.loading.close();
-          this.$router.push({
-            name: "Home",
-          });
+    async load(page = 1) {
+      this.loading = this.$vs.loading();
+      let data = await fetchAddress(this.address, page);
+      // need more error alert (
+      if (!data || typeof data == "number") {
+        this.error("Address Error", "Please Check Your Input Again!");
+        this.loading.close();
+        this.$router.push({
+          name: "Home",
         });
+      }
+      this.items = [
+        ...this.items,
+        ...data.items
+          .filter((ele) => {
+            return !ele.upstream;
+          })
+          .map((e) => {
+            return e;
+          }),
+      ];
+      if (page == 1) {
+        this.data = data;
+        if (!data.profile.avatar) {
+          data.profile.avatar = [""];
+        }
+        this.fallbackAvatar();
+      }
+      this.page = page;
+      this.loading.close();
     },
     error(title, text) {
       this.$vs.notification({
