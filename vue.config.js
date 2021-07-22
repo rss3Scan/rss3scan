@@ -6,7 +6,7 @@ module.exports = {
     i18n: {},
   },
   pwa: {
-    name: "RSS3://Scan",
+    name: "RSS3Scan",
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
     themeColor: "#fbfbfb",

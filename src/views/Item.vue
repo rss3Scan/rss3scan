@@ -105,16 +105,6 @@ export default {
       this.item = item;
       this.loading.close();
     },
-    parseItemId(id) {
-      const splited = id.split("-");
-      return splited[2] !== undefined ? parseInt(splited[2]) : Infinity;
-    },
-  },
-  filters: {
-    noNull(data, text) {
-      if (data) return data;
-      return text;
-    },
   },
 };
 </script>
