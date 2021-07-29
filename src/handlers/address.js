@@ -28,7 +28,7 @@ export async function fetchAddress(address, page = 1, retry_time = 0) {
     itemNumber = parseInt(d[1]);
   }
   // hit item cache
-  if (itemNumber > 0 && addressItemList[realAddress][itemNumber]) {
+  if (itemNumber >= 0 && addressItemList[realAddress][itemNumber]) {
     return addressItemList[realAddress][itemNumber];
   }
   try {
@@ -41,7 +41,7 @@ export async function fetchAddress(address, page = 1, retry_time = 0) {
       return data.code;
     }
     let items = [];
-    let nextPageFlag = itemNumber > 0;
+    let nextPageFlag = itemNumber >= 0;
     if (data.profile && !profileList[data.id]) {
       profileList[data.id] = {
         id: data.id,
@@ -57,7 +57,7 @@ export async function fetchAddress(address, page = 1, retry_time = 0) {
       addressItemList[realAddress][d.number] = d;
       items.push(d);
     })
-    if (itemNumber) {
+    if (itemNumber || itemNumber == 0) {
       if (nextPageFlag) {
         await fetchAddress(realAddress, `${page + 1}-${itemNumber}`);
       } else {
@@ -68,7 +68,7 @@ export async function fetchAddress(address, page = 1, retry_time = 0) {
     return data;
   } catch (error) {
     console.error(error);
-    if(error.responsed.status == '400'){
+    if (error.responsed.status == '400') {
       return false
     }
     return await fetchAddress(realAddress, realPage, retry_time + 1);
