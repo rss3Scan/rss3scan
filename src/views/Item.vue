@@ -38,18 +38,12 @@
               'text/xml',
               'text/csv',
               'text/css',
-            ].some((ele) => {
-              return content.mime_type == ele;
-            })
+            ].includes(content.mime_type)
           "
         />
         <Audio
           :content="content"
-          v-else-if="
-            ['audio/ogg', 'audio/mpeg'].some((ele) => {
-              return content.mime_type == ele;
-            })
-          "
+          v-else-if="['audio/ogg', 'audio/mpeg'].includes(content.mime_type)"
         />
         <div class="unsupport" v-else>
           <vs-alert color="danger">
@@ -73,7 +67,7 @@ import Date from "@/components/common/Date";
 import WebPage from "@/components/item/webpage";
 import Audio from "@/components/item/audio";
 import { fetchItem } from "../handlers/address";
-
+import { titleify } from "../handlers/utils";
 export default {
   name: "Item",
   components: {
@@ -95,14 +89,13 @@ export default {
     } else {
       this.id = this.$route.params.item;
     }
-  },
-  mounted() {
     this.load();
   },
   methods: {
     async load() {
       let item = await fetchItem(this.address, this.id);
       this.item = item;
+      titleify(item.title)
       this.loading.close();
     },
   },

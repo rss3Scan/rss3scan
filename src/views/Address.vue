@@ -96,6 +96,7 @@
 <script>
 import Date from "@/components/common/Date";
 import { fetchAddress } from "../handlers/address";
+import { titleify } from "../handlers/utils";
 export default {
   name: "Address",
   components: {
@@ -135,6 +136,7 @@ export default {
           return !ele.upstream;
         }),
       ];
+      titleify(data.profile.name);
       // only page 1 load avatar
       if (page == 1) {
         this.data = data;

@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-
+import { titleify } from "../handlers/utils";
 Vue.use(VueRouter);
 
 const routes = [
@@ -45,4 +45,8 @@ const router = new VueRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  titleify(to.name);
+  next();
+});
 export default router;

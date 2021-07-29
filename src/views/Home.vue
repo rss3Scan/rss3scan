@@ -20,9 +20,6 @@ export default {
 </script>
 
 <style lang="scss">
-.home {
-}
-
 .main-logo {
   max-width: 100%;
   height: auto;
