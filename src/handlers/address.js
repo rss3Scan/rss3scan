@@ -53,7 +53,11 @@ export async function fetchAddress(address, page = 1, retry_time = 0) {
       if (parseInt(d.number) == itemNumber) {
         nextPageFlag = false;
       }
-      d.authors = await fetchProfiles(d.authors);
+      if (d.authors) {
+        d.authors = await fetchProfiles(d.authors);
+      } else {
+        d.authors = []
+      }
       addressItemList[realAddress][d.number] = d;
       items.push(d);
     })
@@ -68,7 +72,7 @@ export async function fetchAddress(address, page = 1, retry_time = 0) {
     return data;
   } catch (error) {
     console.error(error);
-    if (error.responsed.status == '400') {
+    if (error.responsed && error.responsed.status == '400') {
       return false
     }
     return await fetchAddress(realAddress, realPage, retry_time + 1);

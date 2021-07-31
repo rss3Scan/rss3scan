@@ -67,7 +67,7 @@
             <h3>#{{ item.number }} {{ item.title }}</h3>
           </template>
           <template #text>
-            <p>
+            <p v-if="item.authors">
               {{
                 item.authors
                   .map((x) => {
@@ -158,8 +158,10 @@ export default {
       });
     },
     fallbackAvatar() {
-      let avatar = this.data.profile.avatar.shift();
-      this.avatar = avatar ? avatar : "";
+      if (this.data.profile && this.data.profile.avatar) {
+        let avatar = this.data.profile.avatar.shift();
+        this.avatar = avatar ? avatar : "";
+      }
     },
   },
 };

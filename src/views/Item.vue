@@ -45,6 +45,13 @@
           :content="content"
           v-else-if="['audio/ogg', 'audio/mpeg'].includes(content.mime_type)"
         />
+        <div
+          v-else-if="content.mime_type.includes('image/')"
+          v-for="address in content.address"
+          :key="address"
+        >
+          <img :src="address" />
+        </div>
         <div class="unsupport" v-else>
           <vs-alert color="danger">
             <template #title> {{ $t("item.ut_title") }} </template>
@@ -95,7 +102,7 @@ export default {
     async load() {
       let item = await fetchItem(this.address, this.id);
       this.item = item;
-      titleify(item.title)
+      titleify(item.title);
       this.loading.close();
     },
   },
@@ -156,6 +163,9 @@ export default {
           top: 2.8rem;
           bottom: 3rem;
         }
+      }
+      img {
+        max-width: 100%;
       }
     }
   }

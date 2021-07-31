@@ -11,7 +11,7 @@ export async function fetchProfile(profileId, retryTime = 0) {
     if (profileList[profileId]) {
         return profileList[profileId];
     }
-    let data = (await rh.get(`https://hub.rss3.io/profile/${profileId}`)).data;
+    let data = (await rh.get(`/profile/${profileId}`)).data;
     // return with code => error
     if (data.code) {
         return data.code;
