@@ -38,19 +38,20 @@
               'text/xml',
               'text/csv',
               'text/css',
-            ].some((ele) => {
-              return content.mime_type == ele;
-            })
+            ].includes(content.mime_type)
           "
         />
         <Audio
           :content="content"
-          v-else-if="
-            ['audio/ogg', 'audio/mpeg'].some((ele) => {
-              return content.mime_type == ele;
-            })
-          "
+          v-else-if="['audio/ogg', 'audio/mpeg'].includes(content.mime_type)"
         />
+        <div
+          v-else-if="content.mime_type.includes('image/')"
+          v-for="address in content.address"
+          :key="address"
+        >
+          <img :src="address" />
+        </div>
         <div class="unsupport" v-else>
           <vs-alert color="danger">
             <template #title> {{ $t("item.ut_title") }} </template>
@@ -73,7 +74,7 @@ import Date from "@/components/common/Date";
 import WebPage from "@/components/item/webpage";
 import Audio from "@/components/item/audio";
 import { fetchItem } from "../handlers/address";
-
+import { titleify } from "../handlers/utils";
 export default {
   name: "Item",
   components: {
@@ -95,25 +96,14 @@ export default {
     } else {
       this.id = this.$route.params.item;
     }
-  },
-  mounted() {
     this.load();
   },
   methods: {
     async load() {
       let item = await fetchItem(this.address, this.id);
       this.item = item;
+      titleify(item.title);
       this.loading.close();
-    },
-    parseItemId(id) {
-      const splited = id.split("-");
-      return splited[2] !== undefined ? parseInt(splited[2]) : Infinity;
-    },
-  },
-  filters: {
-    noNull(data, text) {
-      if (data) return data;
-      return text;
     },
   },
 };
@@ -173,6 +163,9 @@ export default {
           top: 2.8rem;
           bottom: 3rem;
         }
+      }
+      img {
+        max-width: 100%;
       }
     }
   }

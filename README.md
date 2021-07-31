@@ -1,24 +1,9 @@
 # rss3scan
+Rss3scan is an Explorer and Analytics Platform for RSS3 Network
 
-## Project setup
-```
-yarn install
-```
+# dev
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+    cd rss3scan
+    yarn
+    code . # open Visual Studio Code
+    yarn serve

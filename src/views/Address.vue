@@ -67,7 +67,7 @@
             <h3>#{{ item.number }} {{ item.title }}</h3>
           </template>
           <template #text>
-            <p>
+            <p v-if="item.authors">
               {{
                 item.authors
                   .map((x) => {
@@ -96,6 +96,7 @@
 <script>
 import Date from "@/components/common/Date";
 import { fetchAddress } from "../handlers/address";
+import { titleify } from "../handlers/utils";
 export default {
   name: "Address",
   components: {
@@ -131,14 +132,12 @@ export default {
       }
       this.items = [
         ...this.items,
-        ...data.items
-          .filter((ele) => {
-            return !ele.upstream;
-          })
-          .map((e) => {
-            return e;
-          }),
+        ...data.items.filter((ele) => {
+          return !ele.upstream;
+        }),
       ];
+      titleify(data.profile.name);
+      // only page 1 load avatar
       if (page == 1) {
         this.data = data;
         if (!data.profile.avatar) {
@@ -158,36 +157,11 @@ export default {
         text: text,
       });
     },
-    parseItemId(id) {
-      const splited = id.split("-");
-      return splited[2] !== undefined ? parseInt(splited[2]) : Infinity;
-    },
     fallbackAvatar() {
-      let avatar = this.data.profile.avatar.shift();
-      this.avatar = avatar ? avatar : "";
-    },
-  },
-  computed: {},
-  filters: {
-    parseItemId(id) {
-      const splited = id.split("-");
-      return splited[2] !== undefined ? parseInt(splited[2]) : Infinity;
-    },
-    textOmit(data, length) {
-      let len = data.length;
-      if (len > length) {
-        return data.slice(0, length) + "...";
+      if (this.data.profile && this.data.profile.avatar) {
+        let avatar = this.data.profile.avatar.shift();
+        this.avatar = avatar ? avatar : "";
       }
-      return data;
-    },
-    authorName(authorList, data) {
-      if (data.profile) {
-        authorList = authorList.map((ele) => {
-          if (ele == data.id) return data.profile.name;
-          return ele;
-        });
-      }
-      return authorList.join(",");
     },
   },
 };
